@@ -1,16 +1,16 @@
-import express from "express";
-import dotenv from "dotenv";
-mongoose.set("strictQuery", true);
-dotenv.config();
-import mongoose from "mongoose";
+import "colors";
+import cookieParser from "cookie-parser";
 import cors from "cors";
-const app = express();
+import dotenv from "dotenv";
+import express from "express";
+import mongoose from "mongoose";
 import globalErrorHandler from "./controllers/errorController.js";
 import AuthRoutes from "./routes/authRoutes.js";
-import AppError from "./utils/appError.js";
-import cookieParser from "cookie-parser";
-import "colors";
 import ProductRoutes from "./routes/productRoutes.js";
+import AppError from "./utils/appError.js";
+mongoose.set("strictQuery", true);
+dotenv.config();
+const app = express();
 
 // Middleware
 app.use(cors({ origin: "*" }));

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import validator from "validator";
-const { ObjectId } = mongoose.Schema.Types;
 
 const CategorySchema = mongoose.Schema(
   {
