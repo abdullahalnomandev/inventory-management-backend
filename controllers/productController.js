@@ -6,7 +6,6 @@ const getProduct = async (req, res, next) => {
 
     // price: { gt: '20' }
     // {price:{$gt:50}}
-    console.log(req.query);
 
     const filters = { ...req.query };
     const excludeFields = ["sort", "page", "limit", "fields"];
@@ -76,3 +75,4 @@ const deleteProductById = async (req, res, next) => {
 };
 
 export { getProduct, createProduct, updateProduct, deleteProductById };
+

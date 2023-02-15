@@ -6,6 +6,7 @@ import express from "express";
 import mongoose from "mongoose";
 import globalErrorHandler from "./controllers/errorController.js";
 import AuthRoutes from "./routes/authRoutes.js";
+import BrandRoutes from "./routes/brandRoutes.js";
 import ProductRoutes from "./routes/productRoutes.js";
 import AppError from "./utils/appError.js";
 mongoose.set("strictQuery", true);
@@ -20,6 +21,7 @@ app.use(cookieParser());
 // Routes
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/product", ProductRoutes);
+app.use("/api/v1/brand",BrandRoutes);
 
 // Error Handler
 app.all("*", (req, res, next) => {
