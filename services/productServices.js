@@ -1,6 +1,7 @@
 import Product from "../models/productModel.js";
 
 const getProductService = async (filters, queries) => {
+  console.log("product",filters, queries);
 
   const products = await Product.find(filters)
     .select(queries.fields)
@@ -24,3 +25,4 @@ const updateProductService = async (productId, data) => {
   return product;
 };
 export { getProductService, createProductService, updateProductService };
+

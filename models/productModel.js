@@ -23,11 +23,12 @@ const ProductSchema = mongoose.Schema(
         required: true,
         validate: {
           validator: (value) => {
-            if (!Array.isArray(value)) {
+            if (Array.isArray(value)) {
               return false;
             }
             let isValid = true;
-            value.forEach((url) => {
+            value.map((url) => {
+
               if (!validator.isURL(url)) {
                 isValid = false;
               }
@@ -48,12 +49,12 @@ const ProductSchema = mongoose.Schema(
     },
     category: {
       type: String,
-      required: true
+      // required: true
     },
     brand: {
       name: {
         type: String,
-        required: true
+        // required: true
       },
       id: {
         type: ObjectId,

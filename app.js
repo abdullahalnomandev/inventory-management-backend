@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import globalErrorHandler from "./controllers/errorController.js";
 import AuthRoutes from "./routes/authRoutes.js";
 import BrandRoutes from "./routes/brandRoutes.js";
+import CategoryRoutes from "./routes/categoryRoutes.js";
 import ProductRoutes from "./routes/productRoutes.js";
 import AppError from "./utils/appError.js";
 mongoose.set("strictQuery", true);
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/product", ProductRoutes);
 app.use("/api/v1/brand",BrandRoutes);
+app.use("/api/v1/category", CategoryRoutes);
 
 // Error Handler
 app.all("*", (req, res, next) => {
@@ -36,7 +38,7 @@ const connection = async () => {
       useNewUrlParser: true
     });
   } catch (error) {
-    console.log(error.red);
+    console.log("err",error.red);
   }
 };
 
