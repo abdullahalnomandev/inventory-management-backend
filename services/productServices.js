@@ -1,8 +1,6 @@
 import Product from "../models/productModel.js";
 
 const getProductService = async (filters, queries) => {
-  console.log("product",filters, queries);
-
   const products = await Product.find(filters)
     .select(queries.fields)
     .sort(queries.sortBy);
