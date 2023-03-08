@@ -15,6 +15,7 @@ const uploader = multer({
     fileFilter: (req, file, callback) => {
         const supportedImage = /png|jpg/;
         const extension = path.extname(file.originalname);
+        console.log(/png|jpg/.test(".png"))
 
         if (supportedImage.test(extension)) {
             callback(null, true)
