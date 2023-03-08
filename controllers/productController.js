@@ -74,5 +74,13 @@ const deleteProductById = async (req, res, next) => {
   }
 };
 
-export { getProduct, createProduct, updateProduct, deleteProductById };
+const fileUpload = async (req, res, next) => {
+  try {
+    res.status(200).json(req.files)
+  } catch (error) {
+    next(new AppError(error, 404));
+  }
+};
+
+export { getProduct, createProduct, updateProduct, deleteProductById, fileUpload };
 

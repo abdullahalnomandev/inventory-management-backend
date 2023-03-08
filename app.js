@@ -19,6 +19,7 @@ const app = express();
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/images",express.static("images"))
 
 // Routes
 app.use("/api/v1/auth", AuthRoutes);
