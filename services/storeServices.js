@@ -13,7 +13,11 @@ const createStoreService = async (data) =>{
     return store;
 
 }
+const getStoreByIdSErvices = async (storeId) => {
+    const store = await Store.findById(storeId);
+    return store;
 
+}
 
-export { createStoreService, getAllStoreService };
+export { createStoreService, getAllStoreService, getStoreByIdSErvices };
 

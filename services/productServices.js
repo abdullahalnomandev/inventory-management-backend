@@ -1,3 +1,4 @@
+import Brand from "../models/brandModel.js";
 import Product from "../models/productModel.js";
 
 const getProductService = async (filters, queries) => {
@@ -10,6 +11,8 @@ const getProductService = async (filters, queries) => {
 
 const createProductService = async (data) => {
   const product = await Product.create(data);
+  const {id:productId,brand} = product;
+  await Brand.updateOne({ _id: brand.id }, { $push: { products: productId } }, { runValidators: true })
   return product;
 };
 
