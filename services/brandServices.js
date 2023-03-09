@@ -2,7 +2,7 @@ import Brand from "../models/brandModel.js";
 
 const getBrandServices = async ()=>{
   // const brand = await Brand.find({}).populate("products","name description -_id");
-  const brand = await Brand.find({});
+  const brand = await Brand.find({}).populate("suppliers.supplilerId")
     return brand;
 };
 

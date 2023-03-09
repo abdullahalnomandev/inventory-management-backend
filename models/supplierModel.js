@@ -91,7 +91,7 @@ const SupplierSchema = mongoose.Schema(
             default: "active"
         },
         brand: {
-            brandName: {
+            name: {
                 type: String,
                 trim: true,
                 required: true,

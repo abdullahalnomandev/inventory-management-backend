@@ -4,7 +4,7 @@ import Product from "../models/productModel.js";
 const getProductService = async (filters, queries) => {
   const products = await Product.find(filters)
     .select(queries.fields)
-    .sort(queries.sortBy);
+    .sort(queries.sortBy).populate("brand.id","name description -_id");
 
   return products;
 };

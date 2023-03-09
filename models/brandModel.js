@@ -45,7 +45,7 @@ const BrandSchema = mongoose.Schema(
       {
         name: String,
         contractNumber: String,
-        id: {
+        supplilerId: {
           type: ObjectId,
           ref: "Supplier",
         },

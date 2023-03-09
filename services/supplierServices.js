@@ -9,8 +9,9 @@ const getAllSupplierService = async () => {
 
 const createSupplierService = async (data) => {
     const supplier = await Supplier.create(data);
-    const { id: supplierId, brand } = supplier;
-    await Brand.updateOne({ _id: brand.id }, { $push: { products: supplierId } }, { runValidators: true })
+    const {id:supplierId, name, brand } = supplier;
+    console.log(supplierId,name);
+  const brands=  await Brand.updateOne({ _id: brand.id }, { $push: { suppliers: {name,supplilerId:supplierId} } }, { runValidators: true })
     return supplier;
 };
 
