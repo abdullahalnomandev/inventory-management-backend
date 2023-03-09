@@ -17,19 +17,20 @@ try {
 
 
 }
+
+
 const createSupplier = async (req, res, next) => {
     try {
         const supplier = await createSupplierService(req.body);
-        res.status(201).json({
-            status: 'success',
+        res.status(200).json({
+            status: "success",
             data: supplier
-        })
-
+        });
     } catch (error) {
-        next(new AppError(error, 400))
+        next(new AppError(error, 404));
     }
+};
 
-}
 
 export { getAllSuppliers, createSupplier };
 

@@ -6,15 +6,13 @@ const getAllSupplierService = async () => {
     const suppliers = await Supplier.find({})
     return suppliers;
 }
+
 const createSupplierService = async (data) => {
     const supplier = await Supplier.create(data);
-    // const { id: supplierId, poc_brand } = supplier;
-    await Brand.updateOne({ _id: supplier.poc_brand.id }, { $push: { suppliers: supplier.id } }, { runValidators: true });
+    const { id: supplierId, brand } = supplier;
+    await Brand.updateOne({ _id: brand.id }, { $push: { products: supplierId } }, { runValidators: true })
     return supplier;
-
 };
-
-
 
 export { getAllSupplierService, createSupplierService };
 
