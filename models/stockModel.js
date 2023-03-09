@@ -13,7 +13,6 @@ const StockSchema = mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
       lowercase: true,
       minLength: [3, "Name must be at least 3 characters"],
       maxLenght: [100, " Name is too large"]
@@ -26,21 +25,7 @@ const StockSchema = mongoose.Schema(
       {
         type: String,
         required: true,
-        validate: {
-          validator: (value) => {
-            if (!Array.isArray(value)) {
-              return false;
-            }
-            let isValid = true;
-            value.forEach((url) => {
-              if (!validator.isURL(url)) {
-                isValid = false;
-              }
-            });
-            return isValid;
-          },
-          message: " Please provide valid image urls"
-        }
+        validate:[validator.isURL,"Please provide a valid URL"]
       }
     ],
     unit: {
@@ -110,12 +95,16 @@ const StockSchema = mongoose.Schema(
     },
     suppliedBy: {
       name: String,
-      trim:true,
-      required: [true," Please provide a supplier name"],
       id: {
         type: ObjectId,
+        required: true,
         ref: "Supplier"
       }
+    },
+    sellCount:{
+      type: Number,
+      default: 0,
+      min: 0
     }
   },
   { timestamps: true }
