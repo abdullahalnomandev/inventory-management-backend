@@ -1,10 +1,9 @@
 import express from 'express';
-import { createStock, getStock } from '../controllers/stockController.js';
+import { createStock, getStockById } from '../controllers/stockController.js';
 
 const router = express.Router();
 
-
-router.get('/',getStock);
+router.get('/:id',getStockById);
 router.post('/',createStock);
 
 export default router;
