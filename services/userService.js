@@ -5,6 +5,9 @@ const signupService = async (userInfo) => {
     return user;
 
 }
+const findUserByEmail = async (email) => {
+    return await User.findOne({ email: email });
+}
 
-export { signupService };
+export { signupService, findUserByEmail };
 
