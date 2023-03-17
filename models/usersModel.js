@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { mongoose } from "mongoose";
 import validator from 'validator';
-
 const UserSchema = mongoose.Schema({
 
   email: {
@@ -82,15 +82,20 @@ const UserSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'active',
+    default: 'inactive',
     enum: ['active', 'inactive', 'blocked']
   },
+  confirmationToken: String,
+  confirmationTokenExpires: Date,
+
   passwordChangeAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date
-}, {
-  timestamps: true
-});
+},
+
+  {
+    timestamps: true
+  });
 
 UserSchema.pre("save", function (next) {
   const password = this.password;
@@ -104,6 +109,18 @@ UserSchema.methods.comparePassword = function (password, hash) {
   const isPasswordValid = bcrypt.compareSync(password, hash);
   return isPasswordValid;
 
+}
+
+UserSchema.methods.generateConfirmationToken = function (password, hash) {
+
+  const token = crypto.randomBytes(32).toString('hex');
+  this.confirmationToken = token;
+
+  const date = new Date();
+  date.setDate(date.getDate() + 1)
+  this.confirmationTokenExpires = date;
+
+  return token;
 }
 
 export default mongoose.model("User", UserSchema);

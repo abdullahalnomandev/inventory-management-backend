@@ -1,4 +1,4 @@
-import { findUserByEmail, signupService } from "../services/userService.js";
+import { findUserByEmail, findUserByTokenService, signupService } from "../services/userService.js";
 import { sendMailWIthEmail } from "../utils/email.js";
 import { generateToken } from "../utils/token.js";
 import AppError from './../utils/appError.js';
@@ -8,10 +8,14 @@ const signUp = async (req, res, next) => {
   try {
     const user = await signupService(req.body);
 
+    const token = user.generateConfirmationToken();
+    await user.save({ validateBeforeSave: false });
+
     const mailData = {
       to: user.email,
       subject: "Verify your account",
-      text: "Thank You"
+      text: token,
+      url: `${req.protocol}://${req.get('host')}${req.originalUrl}/confirmation/${token}`
     }
 
     sendMailWIthEmail(mailData)
@@ -108,6 +112,38 @@ const getMe = async (req, res, next) => {
 
 }
 
+const confirmEmail = async (req, res, next) => {
+  try {
 
-export { signUp, login, getMe };
+    const { token } = req.params;
+    const user = await findUserByTokenService(token);
+    if (!user) {
+      return res.status(403).send({
+        status: 'fail',
+        error: "Invalid token"
+      })
+    }
+    const expired = new Date() > new Date(user.confirmationTokenExpires);
+    if (expired) {
+      return res.status(401).json({
+        status: 'fail',
+        error: "Token expired"
+      })
+    }
+    user.status = 'active';
+    user.confirmationToken = undefined;
+    user.confirmationTokenExpires = undefined;
+    user.save({ validateBeforeSave: false })
+
+    res.status(200).json({
+      status: 'success',
+      message: "Successfully activated your account."
+    })
+
+  } catch (error) {
+    next(new AppError(error, 500))
+  }
+
+}
+export { signUp, login, getMe, confirmEmail };
 

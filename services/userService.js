@@ -9,5 +9,9 @@ const findUserByEmail = async (email) => {
     return await User.findOne({ email: email });
 }
 
-export { signupService, findUserByEmail };
+const findUserByTokenService = async (token) => {
+    return await User.findOne({ confirmationToken: token });
+}
+
+export { signupService, findUserByEmail, findUserByTokenService };
 

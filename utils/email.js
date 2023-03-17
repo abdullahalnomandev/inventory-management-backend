@@ -19,9 +19,10 @@ const sendMailWIthEmail = async (data) => {
             subject: data.subject,
             text: data.text,
             html: `
-            <a href='https://noman-dev.xyz' >
+            <p>Thank you for creating your account. Please confirm your account here:</p>
+            <a href=${data.url} >
             <button style="background:green; border:none;padding:10px 20px; border-radius:20px;color:white;cursor:pointer;">
-            VERIFY
+            VERIFY 
             </button>
             </a>`,
         });
