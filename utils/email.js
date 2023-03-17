@@ -66,3 +66,5 @@ const sendMailWIthMailGun = async (data) => {
 }
 export { sendMailWIthMailGun, sendMailWIthEmail };
 
+
+// LOAD balance for millions data
