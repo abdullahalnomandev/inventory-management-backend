@@ -19,7 +19,7 @@ const signUp = async (req, res, next) => {
     }
 
     sendMailWIthEmail(mailData)
-
+    // transaction ==> form multiple items mongodb
     res.status(201).json({
       status: "success",
       message: "Successfully signed up"
@@ -114,7 +114,6 @@ const getMe = async (req, res, next) => {
 
 const confirmEmail = async (req, res, next) => {
   try {
-
     const { token } = req.params;
     const user = await findUserByTokenService(token);
     if (!user) {
