@@ -1,41 +1,33 @@
 import Jwt from "jsonwebtoken";
-import AppError from "../utils/appError.js";
+import { promisify } from "util";
+/**
+ * 1.Check if token exists
+ * 2. If not token send res
+ * 3. decode the token
+ * 4. If valid t next
+ */
 
-const verifyToken = (req, res, next) => {
-  // const token = req.cookies.access_token;
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    return next(new AppError("A token is required for authentication!", 401));
-  }
-
+export default async (req, res, next) => {
   try {
-    const decoded = Jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+    const token = req.headers?.authorization.split(" ")?.[1];
+    if (!token) {
+      return res.status(401).json({
+        status: "fail",
+        error: "You are not logged in"
+      })
+    }
+
+    const decoded = await promisify(Jwt.verify)(token, process.env.JWT_SECRET);
     req.user = decoded;
-  } catch (err) {
-    return next(new AppError("Token is not valid!", 403));
+    // const User = User.findOne({email:decoded.email})
+    next();
+
+  } catch (error) {
+    return res.status(403).json({
+      status: 'fail',
+      error: "invalid token"
+    })
   }
-  return next();
-};
 
-const verifyUser = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (!req.user.isAdmin || req.user.isAdmin) {
-      console.log(req.user.isAdmin, "user");
-      next();
-    } else {
-      return next(new AppError("You are not authorize!", 403));
-    }
-  });
-};
-
-const verifyAdmin = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user.isAdmin) {
-      next();
-    } else {
-      return next(new AppError("You are not authorize!", 403));
-    }
-  });
-};
-
-export { verifyToken, verifyUser, verifyAdmin };
+}
