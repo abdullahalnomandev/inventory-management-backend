@@ -9,4 +9,4 @@ router.get('/', VerifyToken, authorization("admin", "store-manager", "buyer"), g
 router.post('/', createSupplier);
 
 
-export default router;
+export default router; 0

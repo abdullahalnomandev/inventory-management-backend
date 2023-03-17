@@ -1,4 +1,5 @@
 import { findUserByEmail, signupService } from "../services/userService.js";
+import { sendMailWIthEmail } from "../utils/email.js";
 import { generateToken } from "../utils/token.js";
 import AppError from './../utils/appError.js';
 
@@ -6,6 +7,15 @@ import AppError from './../utils/appError.js';
 const signUp = async (req, res, next) => {
   try {
     const user = await signupService(req.body);
+
+    const mailData = {
+      to: user.email,
+      subject: "Verify your account",
+      text: "Thank You"
+    }
+
+    sendMailWIthEmail(mailData)
+
     res.status(201).json({
       status: "success",
       message: "Successfully signed up"
